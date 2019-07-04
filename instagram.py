@@ -51,7 +51,7 @@ def main():
                                         delimit_by_numbers=True, max_followers=7500,
                                         max_following=5000, min_followers=100, min_following=50)
         # Set a custom delay to not get caught by the bot detector
-        session.set_action_delays(enabled=True, follow=10, randomize=True, random_range=(25, 200))
+        session.set_action_delays(enabled=True, follow=10, unfollow=7.5, randomize=True, random_range=(25, 200))
         # Set limits for the amount of server calls performed hourly
         session.set_quota_supervisor(enabled=True, peak_server_calls=(400, None), sleep_after=["server_calls_h"], sleepyhead=True)
         #
