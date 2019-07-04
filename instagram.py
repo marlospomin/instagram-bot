@@ -2,7 +2,6 @@
 
 from instapy import InstaPy
 from instapy import smart_run
-
 from optparse import OptionParser
 
 # Set usage help text
@@ -29,7 +28,7 @@ password = options.password
 # Flag if your account if private or not
 my_account_is_private = options.private
 # Number of accounts to be followed
-amount_of_accounts_to_follow = 30
+amount_of_accounts_to_follow = 50
 # Unfollow after X time
 unfollow_after = 6 * 60 * 60
 
@@ -52,7 +51,7 @@ def main():
                                         delimit_by_numbers=True, max_followers=7500,
                                         max_following=5000, min_followers=100, min_following=50)
         # Set a custom delay to not get caught by the bot detector
-        session.set_action_delays(enabled=True, follow=30, randomize=True, random_range=(25, 200))
+        session.set_action_delays(enabled=True, follow=10, randomize=True, random_range=(25, 200))
         # Set limits for the amount of server calls performed hourly
         session.set_quota_supervisor(enabled=True, peak_server_calls=(400, None), sleep_after=["server_calls_h"], sleepyhead=True)
         #
@@ -77,13 +76,13 @@ def main():
         session.unfollow_users(amount=amount_of_accounts_to_unfollow, InstaPyFollowed=(True, "nonfollowers"),
                                style="RANDOM", unfollow_after=unfollow_after)
         # Follow accounts that your friends follow
-        session.follow_user_following(accounts_to_get_users_from, amount=amount_of_accounts_to_follow / 2, randomize=True)
+        session.follow_user_following(accounts_to_get_users_from, amount=(amount_of_accounts_to_follow / 2), randomize=True)
         # Unfollow everyone who the bot followed
-        session.unfollow_users(amount=amount_of_accounts_to_unfollow * 1.5, InstaPyFollowed=(True, "all"),
+        session.unfollow_users(amount=(amount_of_accounts_to_unfollow * 1.5), InstaPyFollowed=(True, "all"),
                                style="RANDOM", unfollow_after=unfollow_after)
         #
         # End
         #
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
