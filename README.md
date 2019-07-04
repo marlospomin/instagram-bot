@@ -4,7 +4,7 @@
 
 ## Usage
 
-Follow [instapy's](https://github.com/timgrossmann/InstaPy) documentation on how to setup the files and then run the script.
+Install the dependencies using the script found in the `setup` folder and you're set.
 
 `python3 instagram.py --user username --password password`
 
