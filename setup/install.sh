@@ -16,5 +16,7 @@ dpkg -i google-chrome-stable_current_amd64.deb
 apt install -y -f
 # Delete installation file
 rm google-chrome-stable_current_amd64.deb
+# Fix pip3 error
+echo -ne '#!/usr/bin/python3\nimport sys\nfrom pip import __main__\nif __name__ == "__main__":\n  sys.exit(__main__._main())\n' > /usr/bin/pip3
 # Install instapy
-pip3 install instapy
+pip3 install instapy --ignore-installed
