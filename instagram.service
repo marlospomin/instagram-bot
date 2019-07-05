@@ -1,0 +1,9 @@
+[Unit]
+Description=Instagram bot service manager
+
+[Service]
+ExecStart=/usr/bin/python3 path/to/instagram.py -u USER -p PASS
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
