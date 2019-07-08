@@ -28,7 +28,7 @@ password = options.password
 # Flag if your account if private or not
 my_account_is_private = options.private
 # Number of accounts to be followed
-amount_of_accounts_to_follow = 50
+amount_of_accounts_to_follow = 75
 # Unfollow after X time
 unfollow_after = 6 * 60 * 60
 
@@ -53,7 +53,7 @@ def main():
         # Set a custom delay to not get caught by the bot detector
         session.set_action_delays(enabled=True, follow=10, unfollow=7.5, randomize=True, random_range=(25, 200))
         # Set limits for the amount of server calls performed hourly
-        session.set_quota_supervisor(enabled=True, peak_server_calls=(400, None), sleep_after=["server_calls_h"], sleepyhead=True)
+        session.set_quota_supervisor(enabled=True, peak_server_calls=(250, None), sleep_after=["server_calls_h"], sleepyhead=True)
         #
         # Actions
         #
