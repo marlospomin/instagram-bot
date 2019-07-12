@@ -31,8 +31,8 @@ password = options.password
 my_account_is_private = options.private
 # Flat whether you want extended follows and complete unfollows
 extended_options = options.extended
-# Number of accounts to be followed
-amount_of_accounts_to_follow = 40
+# Number of accounts to be followed for each account gathered
+amount_of_accounts_to_follow = 8
 # Unfollow after X time
 unfollow_after = 6 * 60 * 60
 
