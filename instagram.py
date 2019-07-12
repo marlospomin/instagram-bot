@@ -41,6 +41,7 @@ session = InstaPy(username=username, password=password, headless_browser=True, d
 
 # Main instance
 def main():
+    # Start a session
     with smart_run(session):
         #
         # Settings
