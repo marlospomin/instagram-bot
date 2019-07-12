@@ -21,7 +21,7 @@ parser.add_option("-e", "--extended", dest="extended", action="store_true", defa
 
 # Add parser required arguments or throw an error
 if (options.username == None or options.password == None):
-    parser.error("Incorrect number of arguments")
+    parser.error("Missing username and/or password arguments")
 
 # Store default credentials
 username = options.username
