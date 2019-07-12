@@ -82,9 +82,9 @@ def main():
         # Check if extended_options is enabled
         if (extended_options):
             # Follow accounts that your friends follow
-            session.follow_user_following(accounts_to_get_users_from, amount=(amount_of_accounts_to_follow / 4), randomize=True)
+            session.follow_user_following(accounts_to_get_users_from, amount=(amount_of_accounts_to_follow / 3), randomize=True)
             # Unfollow everyone who the bot followed
-            session.unfollow_users(amount=(amount_of_accounts_to_unfollow + (amount_of_accounts_to_follow / 4)), InstaPyFollowed=(True, "all"), style="RANDOM", unfollow_after=(unfollow_after * 2))
+            session.unfollow_users(amount=(amount_of_accounts_to_unfollow + (amount_of_accounts_to_follow / 3)), InstaPyFollowed=(True, "all"), style="RANDOM", unfollow_after=(unfollow_after * 2))
         #
         # End
         #
