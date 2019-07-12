@@ -14,6 +14,8 @@ parser.add_option("-u", "--username", dest="username", default=None, help="Your 
 parser.add_option("-p", "--password", dest="password", default=None, help="Your Instagram password, default=none")
 parser.add_option("-l", "--private-account", dest="private", action="store_true",
                   default=False, help="Flag whether if your account is private or not, default=false")
+parser.add_option("-e", "--extended", dest="extended", action="store_true", default=False,
+                  help="Flag if you want to follow more and unfollow everyone afterwards, default=false")
 # Parse and initialize arguments
 (options, args) = parser.parse_args()
 
@@ -27,8 +29,10 @@ password = options.password
 
 # Flag if your account if private or not
 my_account_is_private = options.private
+# Flat whether you want extended follows and complete unfollows
+extended_options = options.extended
 # Number of accounts to be followed
-amount_of_accounts_to_follow = 75
+amount_of_accounts_to_follow = 40
 # Unfollow after X time
 unfollow_after = 6 * 60 * 60
 
@@ -51,15 +55,15 @@ def main():
                                         delimit_by_numbers=True, max_followers=7500,
                                         max_following=5000, min_followers=100, min_following=50)
         # Set a custom delay to not get caught by the bot detector
-        session.set_action_delays(enabled=True, follow=10, unfollow=7.5, randomize=True, random_range=(25, 200))
+        session.set_action_delays(enabled=True, follow=10, unfollow=7.5, randomize=True, random_range=(25, 125))
         # Set limits for the amount of server calls performed hourly
-        session.set_quota_supervisor(enabled=True, peak_server_calls=(250, None), sleep_after=["server_calls_h"], sleepyhead=True)
+        session.set_quota_supervisor(enabled=True, peak_server_calls=(200, None), sleep_after=["server_calls_h"], sleepyhead=True)
         #
         # Actions
         #
         # Get accounts you follow (AKA your friends)
-        if (my_account_is_private == False):
-            accounts_to_get_users_from = session.grab_following(username=username, amount=5, live_match=True)
+        if (not my_account_is_private):
+            accounts_to_get_users_from = session.grab_following(username=username, amount=10, live_match=False)
         else:
             # Private accounts aren't supported yet cos of the method above
             print("Private accounts aren't supported at this time!")
@@ -70,16 +74,17 @@ def main():
         # Follow followers of the desired accounts (X each account)
         session.follow_user_followers(accounts_to_get_users_from, amount=amount_of_accounts_to_follow, randomize=True)
         # Accept follow requests if my_account_is_private is True
-        if (my_account_is_private == True):
-            session.accept_follow_requests(amount=250, sleep_delay=3)
+        if (my_account_is_private):
+            session.accept_follow_requests(amount=100, sleep_delay=7.5)
         # Unfollow accounts that didn't follow you back (only accounts interacted by the bot)
-        session.unfollow_users(amount=amount_of_accounts_to_unfollow, InstaPyFollowed=(True, "nonfollowers"),
+        session.unfollow_users(amount=amount_of_accounts_to_unfollow, InstaPyFollowed=(True, ("nonfollowers" if extended_options else "all")),
                                style="RANDOM", unfollow_after=unfollow_after)
-        # Follow accounts that your friends follow
-        session.follow_user_following(accounts_to_get_users_from, amount=(amount_of_accounts_to_follow / 2), randomize=True)
-        # Unfollow everyone who the bot followed
-        session.unfollow_users(amount=(amount_of_accounts_to_unfollow * 1.5), InstaPyFollowed=(True, "all"),
-                               style="RANDOM", unfollow_after=unfollow_after)
+        # Check if extended_options is enabled
+        if (extended_options):
+            # Follow accounts that your friends follow
+            session.follow_user_following(accounts_to_get_users_from, amount=(amount_of_accounts_to_follow / 4), randomize=True)
+            # Unfollow everyone who the bot followed
+            session.unfollow_users(amount=(amount_of_accounts_to_unfollow + (amount_of_accounts_to_follow / 4)), InstaPyFollowed=(True, "all"), style="RANDOM", unfollow_after=(unfollow_after * 2))
         #
         # End
         #
