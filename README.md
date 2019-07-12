@@ -14,6 +14,12 @@ Install the dependencies using the script found in the `setup` folder and you're
 * Python3.
 * Instapy.
 
+# Task List
+
+* Add a basic proxy (rotation?).
+* Add support for private accounts.
+* Add flag to enable post liking (and liking functions ofc).
+
 ## License
 
 Code released under the [MIT](LICENSE) license.
