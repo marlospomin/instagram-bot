@@ -16,6 +16,7 @@ parser.add_option("-l", "--private-account", dest="private", action="store_true"
                   default=False, help="Flag whether if your account is private or not, default=false")
 parser.add_option("-e", "--extended", dest="extended", action="store_true", default=False,
                   help="Flag if you want to follow more and unfollow everyone afterwards, default=false")
+parser.add_option("-a", "--accounts", dest="amount_of_accounts", default=10, help="Amount of accounts to follow, default=10")
 # Parse and initialize arguments
 (options, args) = parser.parse_args()
 
@@ -32,9 +33,9 @@ my_account_is_private = options.private
 # Flat whether you want extended follows and complete unfollows
 extended_options = options.extended
 # Number of accounts to be followed for each account gathered
-amount_of_accounts_to_follow = 8
+amount_of_accounts_to_follow = options.amount_of_accounts
 # Unfollow after X time
-unfollow_after = 6 * 60 * 60
+unfollow_after = options.amount_of_accounts / 6 * 60 * 60
 
 # Create a new bot instance
 session = InstaPy(username=username, password=password, headless_browser=True, disable_image_load=True)
